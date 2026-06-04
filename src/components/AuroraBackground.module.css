@@ -1,0 +1,44 @@
+.auroraContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  background-color: var(--background);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
+.orb1 {
+  width: 50vw;
+  height: 50vw;
+  top: -10vw;
+  left: -10vw;
+  background: radial-gradient(circle, rgba(0,255,200,0.8) 0%, rgba(0,255,200,0) 70%);
+  animation: aurora-1 20s infinite ease-in-out alternate;
+}
+
+.orb2 {
+  width: 60vw;
+  height: 60vw;
+  bottom: -20vw;
+  right: -10vw;
+  background: radial-gradient(circle, rgba(255,0,128,0.6) 0%, rgba(255,0,128,0) 70%);
+  animation: aurora-2 25s infinite ease-in-out alternate;
+}
+
+.orb3 {
+  width: 40vw;
+  height: 40vw;
+  top: 40vh;
+  left: 30vw;
+  background: radial-gradient(circle, rgba(0,180,219,0.5) 0%, rgba(0,180,219,0) 70%);
+  animation: aurora-1 30s infinite ease-in-out alternate-reverse;
+}
