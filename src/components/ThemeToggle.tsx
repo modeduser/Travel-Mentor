@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ forceDark }: { forceDark?: boolean }) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -16,6 +16,8 @@ export default function ThemeToggle() {
   if (!mounted) return <div className="w-[120px] h-8" />; // Placeholder to avoid layout shift
 
   const isDark = theme === "dark";
+  const textColor = forceDark ? "text-white/80 group-hover:text-white" : "text-foreground/70 group-hover:text-foreground";
+  const bgClass = forceDark ? "bg-white/20 border-white/30" : "bg-foreground/10 border-foreground/20";
 
   return (
     <button
@@ -23,10 +25,10 @@ export default function ThemeToggle() {
       className="flex items-center gap-2 group"
       aria-label="Toggle theme"
     >
-      <span className="text-xs font-semibold uppercase tracking-wider text-white/80 group-hover:text-white transition-colors">
+      <span className={`text-xs font-semibold uppercase tracking-wider transition-colors ${textColor}`}>
         {isDark ? 'Dark Mode' : 'Light Mode'}
       </span>
-      <div className="relative w-14 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 shadow-inner flex items-center p-1 cursor-pointer">
+      <div className={`relative w-14 h-8 rounded-full backdrop-blur-md border shadow-inner flex items-center p-1 cursor-pointer ${bgClass}`}>
         <motion.div
           layout
           initial={false}

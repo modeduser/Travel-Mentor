@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Star, MapPin, Search, Filter } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 const MENTORS = [
   { 
@@ -180,9 +181,9 @@ export default function MentorsPage() {
                 {/* Book Button with Gemini Gradient Border */}
                 <div className="relative p-[1px] rounded-2xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary to-purple-500" />
-                  <button className="relative w-full bg-black/50 backdrop-blur-xl py-3 rounded-[15px] font-semibold flex items-center justify-center gap-2 hover:bg-transparent transition-colors">
+                  <Link href={`/mentors/${mentor.id}`} className="relative w-full bg-black/50 backdrop-blur-xl py-3 rounded-[15px] font-semibold flex items-center justify-center gap-2 hover:bg-transparent transition-colors">
                     View Profile
-                  </button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
