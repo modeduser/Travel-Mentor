@@ -4,8 +4,8 @@ import Navbar from '@/components/layout/Navbar';
 import Providers from '@/components/Providers';
 
 export const metadata: Metadata = {
-  title: 'Travel Mentor | Awwwards-Level Travel Platform',
-  description: 'Experience travel differently with intelligent itineraries and immersive vibe previews.',
+  title: 'Travel Mentor — Explore with Expert Guides',
+  description: 'Connect with local experts for personalized travel experiences, safety tools, and intelligent itineraries.',
 };
 
 export default function RootLayout({
@@ -15,11 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <div className="mesh-bg" />
           <Navbar />
-          <main className="min-h-screen pt-20">
+          <main>
             {children}
           </main>
         </Providers>

@@ -1,66 +1,116 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+
+const NAV_LINKS = [
+  { href: '/mentors', label: 'Mentors' },
+  { href: '/safety', label: 'Safety' },
+  { href: '/dashboard', label: 'Dashboard' },
+];
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 50) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  });
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 40));
 
-  // Only force white text at the top of the homepage (because of the dark hero image)
-  const isHomePageTop = pathname === '/' && !isScrolled;
-  const textColorClass = isHomePageTop ? 'text-white' : 'text-foreground';
-  const borderColorClass = isHomePageTop ? 'border-white/20' : 'border-foreground/10';
+  const isHome = pathname === '/';
+  const showLight = isHome && !scrolled;
 
   return (
-    <motion.nav 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'glass-panel border-b border-black/10 dark:border-white/10 shadow-sm' 
-          : 'bg-transparent border-b-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
-      <div className="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center">
-        
-        {/* Logo */}
-        <Link href="/" className={`text-2xl font-bold tracking-tight ${textColorClass} transition-colors`}>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 font-serif italic text-3xl pr-1">
-            Travel
-          </span>
-          <span className="font-sans">Mentor</span>
-        </Link>
-        
-        {/* Links & Actions */}
-        <div className="flex items-center gap-8">
-          <div className={`hidden md:flex gap-8 text-sm font-semibold tracking-wide transition-colors ${textColorClass}`}>
-            <Link href="/mentors" className="hover:text-primary transition-colors">Find a Mentor</Link>
-            <Link href="/safety" className="hover:text-primary transition-colors">Safety Toolkit</Link>
-            <Link href="/dashboard" className="hover:text-primary transition-colors">Dashboard</Link>
+    <>
+      <nav
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? 'glass border-b border-surface-border shadow-sm'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
+
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-1.5">
+            <span className="gradient-text text-2xl font-extrabold tracking-tight">TM</span>
+            <span className={`text-lg font-semibold tracking-tight transition-colors ${showLight ? 'text-white' : 'text-foreground'}`}>
+              Travel Mentor
+            </span>
+          </Link>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map(link => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    active
+                      ? 'bg-primary/10 text-primary'
+                      : showLight
+                        ? 'text-white/80 hover:text-white hover:bg-white/10'
+                        : 'text-muted hover:text-foreground hover:bg-foreground/5'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
-          
-          <div className={`flex items-center gap-4 border-l pl-4 ml-4 transition-colors ${borderColorClass}`}>
-            <ThemeToggle forceDark={isHomePageTop} />
-            <button className="px-6 py-2.5 rounded-full font-bold text-sm bg-gradient-to-r from-primary to-purple-500 text-white hover:opacity-90 transition-opacity shadow-lg shadow-primary/20">
-              Sign In
+
+          {/* Right Side */}
+          <div className="flex items-center gap-3">
+            <ThemeToggle showLight={showLight} />
+            <Link
+              href="/mentors"
+              className="hidden md:inline-flex px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
+            >
+              Get Started
+            </Link>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className={`md:hidden p-2 rounded-lg transition-colors ${showLight ? 'text-white hover:bg-white/10' : 'text-foreground hover:bg-foreground/5'}`}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      </div>
-    </motion.nav>
+      </nav>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 pt-[72px] bg-background/95 backdrop-blur-xl md:hidden">
+          <div className="flex flex-col p-6 gap-2">
+            {NAV_LINKS.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 rounded-xl text-lg font-medium hover:bg-foreground/5 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/mentors"
+              onClick={() => setMobileOpen(false)}
+              className="mt-4 px-5 py-3 rounded-xl text-center font-semibold bg-primary text-white"
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
