@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from 'next-themes';
-import { ReactLenis } from 'lenis/react';
+import { ReactLenis } from '@studio-freight/react-lenis';
 import { useEffect, useState } from 'react';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -18,7 +18,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <ReactLenis root>
-        {children}
+        {children as any}
       </ReactLenis>
     </ThemeProvider>
   );
