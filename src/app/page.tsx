@@ -30,7 +30,7 @@ export default function Home() {
           className="text-white space-y-6"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium">
-            <span className="w-2 h-2 rounded-full bg-[rgb(var(--primary))]" />
+            <span className="w-2 h-2 rounded-full bg-primary" />
             Discover the undiscovered
           </div>
           
@@ -40,7 +40,7 @@ export default function Home() {
               Beautiful
             </span>
             <br/>
-            <span className="font-serif italic font-light text-5xl md:text-7xl text-[rgb(var(--primary))]">
+            <span className="font-serif italic font-light text-5xl md:text-7xl text-primary">
               Destinations
             </span>
           </h1>

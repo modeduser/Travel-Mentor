@@ -1,30 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0066ff;
+  --color-background: #ffffff;
+  --color-foreground: #050505;
+  --color-glass-bg: rgba(255, 255, 255, 0.4);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
+}
 
 @layer base {
-  :root {
-    --background: 255 255 255;
-    --foreground: 5 5 5;
-    --primary: 0 102 255;
-    --glass-bg: rgba(255, 255, 255, 0.4);
-    --glass-border: rgba(0, 0, 0, 0.08);
-  }
-
   .dark {
-    --background: 5 5 5;
-    --foreground: 255 255 255;
-    --primary: 0 255 200;
-    --glass-bg: rgba(20, 20, 25, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --color-background: #050505;
+    --color-foreground: #ffffff;
+    --color-primary: #00ffc8;
+    --color-glass-bg: rgba(20, 20, 25, 0.4);
+    --color-glass-border: rgba(255, 255, 255, 0.08);
   }
 }
 
 body {
-  color: rgb(var(--foreground));
-  background: rgb(var(--background));
+  color: var(--color-foreground);
+  background-color: var(--color-background);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Fluid Animated Mesh Gradient Background */
@@ -32,14 +31,15 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: rgb(var(--background));
+  background-color: var(--color-background);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(var(--primary), 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(255, 0, 128, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(0, 180, 219, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(var(--primary), 0.15) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, var(--color-primary) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 0, 128, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 180, 219, 0.4) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, var(--color-primary) 0px, transparent 50%);
   background-size: 200% 200%;
   animation: meshMove 15s ease infinite alternate;
+  opacity: 0.15;
 }
 
 @keyframes meshMove {
@@ -49,8 +49,8 @@ body {
 
 /* Glassmorphism Utilities */
 .glass-panel {
-  background: var(--glass-bg);
+  background: var(--color-glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--color-glass-border);
 }
