@@ -2,9 +2,6 @@
 
 Travel Mentor is a next-generation travel assistance platform that focuses on providing a human-centered travel experience by connecting travelers with experienced local mentors.
 
-## 🚀 The "Wow" Factor: Aurora Glass UI
-This project features a stunning, custom-built **Aurora Glassmorphism** user interface. Instead of generic templates, it utilizes dynamic CSS-based glowing orbs simulating the Northern Lights floating in deep space, layered beneath frosted glass components.
-
 ## 🛠️ Technology Stack
 - **Framework**: Next.js (App Router)
 - **Language**: TypeScript
